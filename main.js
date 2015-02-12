@@ -1,55 +1,93 @@
 var test = require('tap').test,
-    fuzzer = require('fuzzer'),
+    //fuzzer = require('fuzzer'),
+    Random = require('random-js')
     marqdown = require('./marqdown.js'),
-    fs = require('fs')
+    fs = require('fs'),
+    //stackTrace = require('stack-trace')
+    stackTrace = require('stacktrace-parser')
     ;
- 
+
+var fuzzer = 
+{
+    random : new Random(Random.engines.mt19937().seed(0)),
+    
+    seed: function (kernel)
+    {
+        fuzzer.random = new Random(Random.engines.mt19937().seed(kernel));
+    },
+
+    mutate:
+    {
+        string: function(val)
+        {
+            // MUTATE IMPLEMENTATION HERE
+            var array = val.split('');
+
+            if( fuzzer.random.bool(0.05) )
+            {
+                // REVERSE
+            }
+
+            return array.join('');
+        }
+    }
+};
+
 fuzzer.seed(0);
- 
-test('markedMutation', function(t) {
 
-	var str = 
-"{NumberQuestions:true}\n\
----\n\
-\n\
-### Question\n\
-> {rows:3}\n\
-\n\
-[![NPM version](https://badge.fury.io/js/marked.png)][badge]\n\
-\n\
-### Install\n\
-\n\
-``` bash\n\
-npm install marked --save\n\
-```\n\
-* Hello\n\
-* No\n\
-";
+var failedTests = [];
+var reducedTests = [];
+var passedTests = 0;
 
-    var str2 = fs.readFileSync('simple.md','utf-8');
+function mutationTesting()
+{
+    var markDown = fs.readFileSync('test.md','utf-8');
+    //var markDown = fs.readFileSync('simple.md','utf-8');
 
     for (var i = 0; i < 1000; i++) {
 
-    	var mut = fuzzer.mutate.string(str2);
+        var mutuatedString = fuzzer.mutate.string(markDown);
 
-    	try
-    	{
-    		marqdown.render(mut);
-    		t.ok(true, mut);
+        try
+        {
+            marqdown.render(mutuatedString);
+            passedTests++;
         }
         catch(e)
         {
-			t.ok(false, JSON.stringify(e.stack));
+            failedTests.push( {input:mutuatedString, stack: e.stack} );
         }
     }
 
-    t.end();
-});
+    // RESULTS OF FUZZING
+    for( var i =0; i < failedTests.length; i++ )
+    {
+        var failed = failedTests[i];
+
+        var trace = stackTrace.parse( failed.stack );
+        var msg = failed.stack.split("\n")[0];
+        console.log( msg, trace[0].methodName, trace[0].lineNumber );
+    }
+
+    console.log( "passed {0}, failed {1}, reduced {2}".format(passedTests, failedTests.length, reducedTests.length) );
+
+}
+
+mutationTesting();
+
+//test('markedMutation', function(t) {
+//
+//});
 
 
-// Alternative...
-// Grammar...
-// Markdown...
-// Headers...
-// Inline, bold, html...
-// smarter assertions?
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) { 
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
