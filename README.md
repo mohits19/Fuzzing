@@ -1,16 +1,54 @@
 The goal of this workshop is to use fuzzing to test a tool called `marqdown`, which takes a markdown file, and generates a html rendering of a survey:
 
-See it in use at [checkbox.io](http://checkbox.io/researchers.html).
+See marqdown in use at [checkbox.io](http://checkbox.io/researchers.html).
 
-### Mutation Approach
+### Fuzzing
 
-Fuzzing can use a *generative* approach, which involves randomly creating input, or a *mutation* approach, which involves changing existing input templates.
+Fuzzing is a random testing techique. Fuzzing can be divided into "black-box" (dumb) and "white-box" (smart) approaches. In this workshop, we focus on "black-box" fuzzing. Generally, black-box fuzzing can be implemented in two ways:
 
-To assist with input templates, two files have been provided, `simple.md`, and `test.md`.
+1. **generative**: test input is randomly created. Generation can be guided by grammars or other domain knowledge. This approach is commonly used for security testing.
+2. **mutation**: test input is randomly *modified*. The test input can be existing templates, input files, or captured network traffic that is replayed. Imagine you were testing Microsoft Word and you had a 200 page document. If you randomly made changes to the document and attempted to open it with Word&emdash;chances are you might be able to discover a bug.
 
-##### Mutations
+### Setup
 
-The goal is to use these input templates and apply the following transformations on the input:
+Clone this repository and run `npm install`.
+
+We will be using a mutation approach in this workshop. To assist, two files have been provided, `simple.md`, and `test.md`, which are markdown files read by the program.
+
+Running `node main.js` will output:
+
+    passed 1000, failed 0, reduced 0
+    
+The program is simply reading an input file and for a 1000 times
+
+* asking a fuzzer to randomly change the string
+* passing the fuzzed input to marqdown and simply checking for exceptions being thrown (our *test oracle*):
+
+```
+    var markDown = fs.readFileSync('test.md','utf-8');
+    //var markDown = fs.readFileSync('simple.md','utf-8');
+
+    for (var i = 0; i < 1000; i++) {
+
+        var mutuatedString = fuzzer.mutate.string(markDown);
+
+        try
+        {
+            marqdown.render(mutuatedString);
+            passedTests++;
+        }
+        catch(e)
+        {
+            failedTests.push( {input:mutuatedString, stack: e.stack} );
+        }
+    }
+```
+
+But the fuzzer right now is just returning the same string!
+
+### Generating Fuzzed Input Files
+
+Now, we need to generate mutations to the input file in order to discover failures. Add the following functionality:
 
 * With 5% chance, reverse the input string.
 
