@@ -77,3 +77,25 @@ Consider a generative approach based on the grammar of markdown.
 * Lists
 * Inline HTML
 * etc.
+
+### Reports
+
+Now that you've generated some failing test cases, what can you do?
+
+In a continuous deployment pipeline you could add a fuzzing component on new commits, and then reject them if you can generate failures. You might then generate a report, such as this:
+
+The following commit: "Add new JSON5 parser" failed with the following exception. See attached test case.
+```
+SyntaxError: Expected ':' instead of '' JSON5.parse.error 50 SyntaxError: Expected ':' instead of ''
+    at JSON5.parse.error (/Users/gameweld/workshops/Fuzzing/node_modules/json5/lib/json5.js:50:25)
+    at JSON5.parse.next (/Users/gameweld/workshops/Fuzzing/node_modules/json5/lib/json5.js:62:17)
+    at JSON5.parse.object (/Users/gameweld/workshops/Fuzzing/node_modules/json5/lib/json5.js:443:21)
+    at JSON5.parse.value (/Users/gameweld/workshops/Fuzzing/node_modules/json5/lib/json5.js:467:20)
+    at Object.parse (/Users/gameweld/workshops/Fuzzing/node_modules/json5/lib/json5.js:491:18)
+    at ProcessTokens (/Users/gameweld/workshops/Fuzzing/marqdown.js:287:22)
+    at Object.exports.render (/Users/gameweld/workshops/Fuzzing/marqdown.js:25:18)
+    at mutationTesting (/Users/gameweld/workshops/Fuzzing/main.js:60:22)
+    at Object.<anonymous> (/Users/gameweld/workshops/Fuzzing/main.js:84:1)
+    at Module._compile (module.js:460:26)
+```
+
