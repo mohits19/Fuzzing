@@ -86,7 +86,7 @@ In a continuous deployment pipeline you could add a fuzzing component on new com
 
 The following commit: "Add new JSON5 parser" failed with the following exception. See attached test case.
 ```
-SyntaxError: Expected ':' instead of '' JSON5.parse.error 50 SyntaxError: Expected ':' instead of ''
+SyntaxError: Expected ':' instead of '' JSON5.parse.error
     at JSON5.parse.error (/Users/gameweld/workshops/Fuzzing/node_modules/json5/lib/json5.js:50:25)
     at JSON5.parse.next (/Users/gameweld/workshops/Fuzzing/node_modules/json5/lib/json5.js:62:17)
     at JSON5.parse.object (/Users/gameweld/workshops/Fuzzing/node_modules/json5/lib/json5.js:443:21)
