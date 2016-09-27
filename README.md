@@ -78,6 +78,8 @@ Now that you've generated some failing test cases, what can you do?
 
 In a continuous deployment pipeline you could add a fuzzing component on new commits, and then reject them if you can generate failures. You might then generate a report, such as this:
 
+##### Example Report: 
+
 The following commit: "Add new JSON5 parser" failed with the following exception. See attached test case.
 ```
 SyntaxError: Expected ':' instead of '' JSON5.parse.error
