@@ -64,7 +64,7 @@ Now, we need to generate mutations to the input file in order to discover failur
 
 See [random-js](https://www.npmjs.com/package/random-js) for tips on using some helpful random utilities.
 ```javascript
-# for example, this will execute true for 5% of evaluations.
+// for example, this will execute true for 5% of evaluations.
 if( fuzzer.random.bool(0.05) )
 ```
 
