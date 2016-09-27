@@ -50,17 +50,17 @@ But the fuzzer right now is just returning the same string!
 
 Now, we need to generate mutations to the input file in order to discover failures. Add the following functionality:
 
-* 1. With 5% chance, reverse the input string.
+1. With 5% chance, reverse the input string.
 
-* 2. Alternate between templates.
+2. Alternate between templates.
 
-* 3. With 25% chance, remove a random set of characters, from a random start position:
-HINT: [See `Array.splice`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
+3. With 25% chance, remove a random set of characters, from a random start position:
+  HINT: [See `Array.splice`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
 
-* 4. With a 25% chance, insert random characters into the string
-HINT: [See insert array into another](http://stackoverflow.com/questions/7032550/javascript-insert-an-array-inside-another-array)
+4. With a 25% chance, insert random characters into the string
+  HINT: [See insert array into another](http://stackoverflow.com/questions/7032550/javascript-insert-an-array-inside-another-array)
 
-* 5. With a 5% chance, repeat.
+5. With a 5% chance, repeat.
 
 See [random-js](https://www.npmjs.com/package/random-js) for tips on using some helpful random utilities.
 ```javascript
