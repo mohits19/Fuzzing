@@ -24,7 +24,7 @@ The program is simply reading an input file and for a 1000 times
 * asking a fuzzer to randomly change the string
 * passing the fuzzed input to marqdown and simply checking for exceptions being thrown (our *test oracle*):
 
-```
+```javascript
     var markDown = fs.readFileSync('test.md','utf-8');
     //var markDown = fs.readFileSync('simple.md','utf-8');
 
@@ -63,7 +63,7 @@ HINT: [See insert array into another](http://stackoverflow.com/questions/7032550
 * 5. With a 5% chance, repeat.
 
 See [random-js](https://www.npmjs.com/package/random-js) for tips on using some helpful random utilities.
-```
+```javascript
 # for example, this will execute true for 5% of evaluations.
 if( fuzzer.random.bool(0.05) )
 ```
