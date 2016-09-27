@@ -72,15 +72,6 @@ if( fuzzer.random.bool(0.05) )
 
 Fuzzing may create many inputs that are exercising the same bug.  A test suite minification step will attempt to discard test cases that are not any more effective.  Use stack trace to help determine if you are triggering the same bug, then only save the minimum tests needed (Inside `reducedTests`).
 
-### Bonus
-
-Consider a generative approach based on the grammar of markdown.
-
-* Headers
-* Lists
-* Inline HTML
-* etc.
-
 ### Reports
 
 Now that you've generated some failing test cases, what can you do?
@@ -102,3 +93,11 @@ SyntaxError: Expected ':' instead of '' JSON5.parse.error
     at Module._compile (module.js:460:26)
 ```
 
+### Bonus
+
+Consider a generative approach based on the grammar of markdown.
+
+* Headers
+* Lists
+* Inline HTML
+* etc.
