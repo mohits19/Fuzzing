@@ -52,7 +52,7 @@ Now, we need to generate mutations to the input file in order to discover failur
 
 1. With 5% chance, reverse the input string.
 
-2. Alternate between templates.
+2. Alternate between templates (simple.md/test.md)
 
 3. With 25% chance, remove a random set of characters, from a random start position:
   HINT: [See `Array.splice`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
