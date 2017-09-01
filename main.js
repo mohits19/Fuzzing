@@ -1,6 +1,4 @@
-var test = require('tap').test,
-    //fuzzer = require('fuzzer'),
-    Random = require('random-js')
+var Random = require('random-js')
     marqdown = require('./marqdown.js'),
     fs = require('fs'),
     //stackTrace = require('stack-trace')
@@ -34,17 +32,17 @@ var fuzzer =
 };
 
 fuzzer.seed(0);
+//var markDown = fs.readFileSync('simple.md','utf-8');
+//mutationTesting('test.md',1000);
 
 var failedTests = [];
 var reducedTests = [];
 var passedTests = 0;
 
-function mutationTesting()
+function mutationTesting(path,iterations)
 {
-    var markDown = fs.readFileSync('test.md','utf-8');
-    //var markDown = fs.readFileSync('simple.md','utf-8');
-
-    for (var i = 0; i < 1000; i++) {
+    var markDown = fs.readFileSync(path,'utf-8');
+    for (var i = 0; i < iterations; i++) {
 
         var mutuatedString = fuzzer.mutate.string(markDown);
 
@@ -73,12 +71,8 @@ function mutationTesting()
 
 }
 
-mutationTesting();
-
-//test('markedMutation', function(t) {
-//
-//});
-
+exports.mutationTesting = mutationTesting;
+exports.fuzzer = fuzzer;
 
 if (!String.prototype.format) {
   String.prototype.format = function() {
