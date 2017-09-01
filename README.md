@@ -1,3 +1,5 @@
+![build](https://travis-ci.org/CSC-DevOps/Fuzzing.svg?branch=master)
+
 The goal of this workshop is to use fuzzing to test a tool called `marqdown`, which takes a markdown file, and generates a html rendering of a survey:
 
 See marqdown in use at [checkbox.io](http://checkbox.io/researchers.html).
