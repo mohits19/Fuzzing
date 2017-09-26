@@ -1,4 +1,4 @@
-![build](https://travis-ci.org/CSC-DevOps/Fuzzing.svg?branch=master)
+[![build](https://travis-ci.org/CSC-DevOps/Fuzzing.svg?branch=master)](https://travis-ci.org/CSC-DevOps/Fuzzing)
 
 The goal of this workshop is to use fuzzing to test a tool called `marqdown`, which takes a markdown file, and generates a html rendering of a survey:
 
