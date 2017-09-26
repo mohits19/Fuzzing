@@ -58,9 +58,11 @@ Now, we need to generate mutations to the input file in order to discover failur
 
 3. With 25% chance, remove a random set of characters, from a random start position:
   HINT: [See `Array.splice`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
+  HINT: See `fuzzer.random.integer(0,99)` for creating a random number between 0-99.
 
 4. With a 25% chance, insert random characters into the string
   HINT: [See insert array into another](http://stackoverflow.com/questions/7032550/javascript-insert-an-array-inside-another-array)
+  HINT: See `fuzzer.random.string(10)` for creating a random string of length 10.
 
 5. With a 5% chance, repeat.
 
