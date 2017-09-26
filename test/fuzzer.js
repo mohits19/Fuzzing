@@ -4,7 +4,7 @@ var main = require("../main");
 describe("Sanity check", function() {
   describe("mutationTesting runs", function() {
     it("doesn't crash", function() {
-        main.mutationTesting('test.md',100);
+        main.mutationTesting(['test.md','simple.md'],100);
     });
   });
 

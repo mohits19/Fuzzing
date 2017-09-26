@@ -1,7 +1,6 @@
 var Random = require('random-js')
     marqdown = require('./marqdown.js'),
     fs = require('fs'),
-    //stackTrace = require('stack-trace')
     stackTrace = require('stacktrace-parser')
     ;
 
@@ -24,37 +23,40 @@ var fuzzer =
             if( fuzzer.random.bool(0.05) )
             {
                 // REVERSE
-                array.reverse()
             }
             // delete random characters
             if( fuzzer.random.bool(0.25) )
             {
-                
+                //fuzzer.random.integer(0,99)
             }
 
+            // add random characters
+            // fuzzer.random.string(10)
 
             return array.join('');
         }
     }
 };
 
-fuzzer.seed(0);
-//var markDown = fs.readFileSync('simple.md','utf-8');
-mutationTesting(['test.md','simple.md'],1000);
+if( process.env.NODE_ENV != "test")
+{
+    fuzzer.seed(0);
+    mutationTesting(['test.md','simple.md'],1000);
+}
 
 function mutationTesting(paths,iterations)
-{
+{    
     var failedTests = [];
     var reducedTests = [];
     var passedTests = 0;
-
-    var path = paths[0];
     
-    var markDown = fs.readFileSync(path,'utf-8');
+    var markDownA = fs.readFileSync(paths[0],'utf-8');
+    var markDownB = fs.readFileSync(paths[1],'utf-8');
+    
     for (var i = 0; i < iterations; i++) {
 
-        var mutuatedString = fuzzer.mutate.string(markDown);
-
+        let mutuatedString = fuzzer.mutate.string(markDownA);
+        
         try
         {
             marqdown.render(mutuatedString);
@@ -66,6 +68,7 @@ function mutationTesting(paths,iterations)
         }
     }
 
+    reduced = {};
     // RESULTS OF FUZZING
     for( var i =0; i < failedTests.length; i++ )
     {
@@ -74,9 +77,19 @@ function mutationTesting(paths,iterations)
         var trace = stackTrace.parse( failed.stack );
         var msg = failed.stack.split("\n")[0];
         console.log( msg, trace[0].methodName, trace[0].lineNumber );
+
+        let key = trace[0].methodName + "." + trace[0].lineNumber;
+        if( !reduced.hasOwnProperty( key ) )
+        {
+        }
     }
 
     console.log( "passed {0}, failed {1}, reduced {2}".format(passedTests, failedTests.length, reducedTests.length) );
+    
+    for( var key in reduced )
+    {
+        console.log( reduced[key] );
+    }
 
 }
 
