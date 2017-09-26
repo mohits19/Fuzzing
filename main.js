@@ -33,14 +33,14 @@ var fuzzer =
 
 fuzzer.seed(0);
 //var markDown = fs.readFileSync('simple.md','utf-8');
-//mutationTesting('test.md',1000);
-
-var failedTests = [];
-var reducedTests = [];
-var passedTests = 0;
+mutationTesting('test.md',100);
 
 function mutationTesting(path,iterations)
 {
+    var failedTests = [];
+    var reducedTests = [];
+    var passedTests = 0;
+    
     var markDown = fs.readFileSync(path,'utf-8');
     for (var i = 0; i < iterations; i++) {
 
