@@ -64,7 +64,7 @@ Now, we need to generate mutations to the input file in order to discover failur
   HINT: [See insert array into another](http://stackoverflow.com/questions/7032550/javascript-insert-an-array-inside-another-array)
   HINT: See `fuzzer.random.string(10)` for creating a random string of length 10.
 
-5. With a 5% chance, repeat.
+5. With a 5% chance, repeat. HINT: `do/while`
 
 See [random-js](https://www.npmjs.com/package/random-js) for tips on using some helpful random utilities.
 ```javascript
