@@ -24,7 +24,14 @@ var fuzzer =
             if( fuzzer.random.bool(0.05) )
             {
                 // REVERSE
+                array.reverse()
             }
+            // delete random characters
+            if( fuzzer.random.bool(0.25) )
+            {
+                
+            }
+
 
             return array.join('');
         }
@@ -33,13 +40,15 @@ var fuzzer =
 
 fuzzer.seed(0);
 //var markDown = fs.readFileSync('simple.md','utf-8');
-mutationTesting('test.md',100);
+mutationTesting(['test.md','simple.md'],1000);
 
-function mutationTesting(path,iterations)
+function mutationTesting(paths,iterations)
 {
     var failedTests = [];
     var reducedTests = [];
     var passedTests = 0;
+
+    var path = paths[0];
     
     var markDown = fs.readFileSync(path,'utf-8');
     for (var i = 0; i < iterations; i++) {
