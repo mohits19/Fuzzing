@@ -20,18 +20,29 @@ var fuzzer =
             // MUTATE IMPLEMENTATION HERE
             var array = val.split('');
 
-            if( fuzzer.random.bool(0.05) )
-            {
-                // REVERSE
-            }
-            // delete random characters
-            if( fuzzer.random.bool(0.25) )
-            {
-                //fuzzer.random.integer(0,99)
-            }
+            do{
+                // with 5% chance, reverse string
+                if( fuzzer.random.bool(0.05) )
+                {
+                    //array.reverse();
+                }
 
-            // add random characters
-            // fuzzer.random.string(10)
+                // with 25% chance, delete random set of characters
+                if( fuzzer.random.bool(0.25) )
+                {
+                    var start = fuzzer.random.integer(0, array.length-1);
+                    var length = fuzzer.random.integer(1, 10);
+                    array.splice(start, length);
+                }
+
+                // with 25% chance, add random set of characters
+                if( fuzzer.random.bool(0.25) )
+                {
+                    var start = fuzzer.random.integer(0, array.length-1);
+                    var insert = fuzzer.random.string(10).split('');
+                    array.splice(start, 0, ...insert);
+                }
+            }while(fuzzer.random.bool(0.05));   // repeat with 5% chance
 
             return array.join('');
         }
@@ -55,7 +66,8 @@ function mutationTesting(paths,iterations)
     
     for (var i = 0; i < iterations; i++) {
 
-        let mutuatedString = fuzzer.mutate.string(markDownA);
+        // alternate between templates
+        let mutuatedString = fuzzer.mutate.string((i%2==0) ? markDownA : markDownB);
         
         try
         {
@@ -68,6 +80,8 @@ function mutationTesting(paths,iterations)
         }
     }
 
+
+    
     reduced = {};
     // RESULTS OF FUZZING
     for( var i =0; i < failedTests.length; i++ )
@@ -81,6 +95,8 @@ function mutationTesting(paths,iterations)
         let key = trace[0].methodName + "." + trace[0].lineNumber;
         if( !reduced.hasOwnProperty( key ) )
         {
+            reduced[key] = msg;
+            reducedTests.push(failed);
         }
     }
 
@@ -88,7 +104,7 @@ function mutationTesting(paths,iterations)
     
     for( var key in reduced )
     {
-        console.log( reduced[key] );
+        console.log(key, reduced[key] );
     }
 
 }
