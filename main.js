@@ -24,7 +24,7 @@ var fuzzer =
                 // with 5% chance, reverse string
                 if( fuzzer.random.bool(0.05) )
                 {
-                    //array.reverse();
+                    array.reverse();
                 }
 
                 // with 25% chance, delete random set of characters
